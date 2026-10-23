@@ -61,8 +61,11 @@ Flags are OverTheWire-style:
 - **Two privilege paths to `proof.txt`** with different elegance grades. At
   least one is live-fire verified; only one scales to a real fleet.
 - **Calibrated by live fire.** The target was developed against an autonomous
-  pentest agent over 5 attack rounds (full transcripts in the wiki). Best agent
-  run: 50 minutes to both flags. Realistic human expectation: 2–4 hours.
+  pentest agent over multiple attack rounds (transcripts in docs/SOLUTION.md).
+  Fastest recorded agent run on our calibration rig (Apple M5 Ultra, local
+  Qwen3.8-Flash-Next): ~15 minutes to both flags — other models or hosts may
+  land faster or slower, so treat this as one data point, not a leaderboard.
+  Realistic human expectation: 2–4 hours.
 
 ## Platform note (read this before filing an issue)
 
@@ -84,8 +87,7 @@ chain — it works everywhere, including x86_64. Details:
 
 Full kill chain, offsets, and per-round attack transcripts:
 [docs/SOLUTION.md](docs/SOLUTION.md) — spoiler-protected by this section
-being at the bottom, promise. More transcripts in the
-[wiki](https://github.com/taniungou/php2shell-lab/wiki).
+being at the bottom, promise.
 
 ## License
 
