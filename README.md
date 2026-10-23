@@ -22,7 +22,8 @@ Flags are OverTheWire-style:
 | `local.txt` | `/var/www/local.txt` | `www-data` |
 | `proof.txt` | `/root/proof.txt` | `root` only |
 
-Set your own flag values at build time:
+Set your own flag values at build time (and your own account passwords in
+`private.ini` — the shipped `change-me-*` values work out of the box):
 
 ```bash
 docker compose build \
