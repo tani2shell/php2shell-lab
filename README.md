@@ -7,15 +7,40 @@ memory-corruption family (CVE-2026-109618 / CVE-2026-109619, CVSS 9.8/9.2, fixed
 PHP 8.4.27). The vulnerability is in the **engine**, not the app: the tiny PHP
 application layer is intentionally clean of injections. You must fingerprint the
 runtime, correlate the advisory, and pick the right ballistics.
+Stuck? Full walkthrough in [docs/SOLUTION.md](docs/SOLUTION.md).
 
 ## Quick start
 
+**Prerequisites:** Docker Engine (or Docker Desktop on Windows/macOS) with
+Compose v2 — that's it. No PHP toolchain needed on the host. Works on
+Windows 10/11 (WSL2), Linux, and macOS; see the platform note below for
+which exploit chain your CPU supports.
+
 ```bash
-docker compose up -d --build
-# target: http://localhost:18901   (user: demo)
+git clone https://github.com/taniungou/php2shell-lab.git
+cd php2shell-lab
+docker compose up -d --build          # first build pulls the pinned base image
 ```
 
-Reset: `docker compose down -v && docker compose up -d --build`
+Open `http://localhost:18901` and sign in as user `demo`
+(password `change-me-demo`) to reach the app. From here the box is
+black-box: figure out the rest.
+
+Want your own flag values and account passwords? Edit `private.ini`, then:
+
+```bash
+docker compose build \
+  --build-arg FLAG_LOCAL=flag{...} \
+  --build-arg FLAG_PROOF=flag{...}
+```
+
+Housekeeping:
+
+```bash
+docker compose logs -f                # watch the target
+docker compose down -v && docker compose up -d --build   # full reset (re-arms the leak window)
+docker compose down                   # stop and free resources
+```
 
 Flags are OverTheWire-style:
 
@@ -23,15 +48,6 @@ Flags are OverTheWire-style:
 |------|------|-------------|
 | `local.txt` | `/var/www/local.txt` | `www-data` |
 | `proof.txt` | `/root/proof.txt` | `root` only |
-
-Set your own flag values at build time (and your own account passwords in
-`private.ini` — the shipped `change-me-*` values work out of the box):
-
-```bash
-docker compose build \
-  --build-arg FLAG_LOCAL=flag{...} \
-  --build-arg FLAG_PROOF=flag{...}
-```
 
 ## What makes it non-trivial
 
@@ -51,10 +67,12 @@ docker compose build \
 ## Platform note (read this before filing an issue)
 
 The public **RCE-landing** exploits for PHP2Shell assume an x86_64 kernel heap
-layout. On **Apple Silicon** (and other aarch64 hosts) the leak primitives land
-but the RCE landing does not — we verified this across amd64-under-emulation,
-arm64-native, and the upstream authors' reference configuration. On those hosts,
-the intended solution is the **disclosure chain**, not the RCE chain. Details:
+layout. On **Apple Silicon** (and other aarch64 hosts such as Windows-on-ARM)
+the leak primitives land but the RCE landing does not — we verified this across
+amd64-under-emulation, arm64-native, and the advisory authors' reference
+configuration ([calif.io/php2shell](https://calif.io/php2shell), x86_64 Linux).
+On ARM hosts the intended solution is the **disclosure chain**, not the RCE
+chain — it works everywhere, including x86_64. Details:
 [docs/PLATFORM-MATRIX.md](docs/PLATFORM-MATRIX.md).
 
 ## Resources
@@ -64,8 +82,10 @@ the intended solution is the **disclosure chain**, not the RCE chain. Details:
 
 ## Solutions
 
-Spoiler-protected in the [wiki](https://github.com/taniungou/php2shell-lab/wiki) — the full kill chain, offsets,
-and per-round agent attack transcripts. No spoilers in this README, promise.
+Full kill chain, offsets, and per-round attack transcripts:
+[docs/SOLUTION.md](docs/SOLUTION.md) — spoiler-protected by this section
+being at the bottom, promise. More transcripts in the
+[wiki](https://github.com/taniungou/php2shell-lab/wiki).
 
 ## License
 

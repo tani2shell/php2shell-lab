@@ -3,15 +3,35 @@
 [English](README.md) | 日本語 | [中文](README.zh.md)
 
 **PHP2Shell** — 2026年のPHPエンジン級メモリ破損脆弱性群（CVE-2026-109618 / CVE-2026-109619、CVSS 9.8/9.2、PHP 8.4.27で修正済み）を軸に構築した、ブラックボックスCTFターゲットです。脆弱性はアプリではなく**エンジン**にあります。ごく小規模なPHPアプリ層にはインジェクション系の問題が意図的に存在しません。実行時ランタイムを指紋で特定し、アドバイザリと照合し、正しい弾道を選定してください。
+詰まった場合は[docs/SOLUTION.md](docs/SOLUTION.md)の全解法手順を参照。
 
 ## クイックスタート
 
+**前提条件：** Docker Engine（Windows/macOSではDocker Desktop）+ Compose v2 のみ。ホストにPHPツールチェーンは不要です。Windows 10/11（WSL2）、Linux、macOSで動作。CPUに対応可能な攻撃チェーンは下記のプラットフォーム注意を参照。
+
 ```bash
-docker compose up -d --build
-# ターゲット: http://localhost:18901   (ユーザー: demo)
+git clone https://github.com/taniungou/php2shell-lab.git
+cd php2shell-lab
+docker compose up -d --build          # 初回ビルドでpin済みbase imageを取得
 ```
 
-リセット: `docker compose down -v && docker compose up -d --build`
+`http://localhost:18901` を開き、ユーザー `demo`（パスワード `change-me-demo`）でログインするとアプリに到達します。ここから先はブラックボックスです。
+
+独自のフラグ値とアカウントパスワードを設定する場合：`private.ini` を編集後、
+
+```bash
+docker compose build \
+  --build-arg FLAG_LOCAL=flag{...} \
+  --build-arg FLAG_PROOF=flag{...}
+```
+
+運用コマンド：
+
+```bash
+docker compose logs -f                # ログ監視
+docker compose down -v && docker compose up -d --build   # 完全リセット（リークウィンドウ再開放）
+docker compose down                   # 停止・リソース解放
+```
 
 フラグはOverTheWire方式です：
 
@@ -19,14 +39,6 @@ docker compose up -d --build
 |------|------|-------------|
 | `local.txt` | `/var/www/local.txt` | `www-data` |
 | `proof.txt` | `/root/proof.txt` | `root` のみ |
-
-ビルド時に独自フラグ値を設定可能（アプリアカウントのパスワードは `private.ini` で変更できます。同梱の `change-me-*` 値はそのままでも動作します）：
-
-```bash
-docker compose build \
-  --build-arg FLAG_LOCAL=flag{...} \
-  --build-arg FLAG_PROOF=flag{...}
-```
 
 ## 難所
 
@@ -37,7 +49,7 @@ docker compose build \
 
 ## プラットフォーム注意（issueを立てる前に一読）
 
-PHP2Shellの公開済み**RCE着弾**エクスプロイトはx86_64カーネルヒープ配置を前提とします。**Apple Silicon**（およびその他のaarch64ホスト）ではリーク系プリミティブは着弾するものの、RCE着弾は再現しません。これはamd64エミュレーション下・arm64ネイティブ・上流作者の参照構成のいずれでも検証済みです。これらのホストでは想定解は**開示チェーン**でありRCEチェーンではありません。詳細：[docs/PLATFORM-MATRIX.md](docs/PLATFORM-MATRIX.md)。
+PHP2Shellの公開済み**RCE着弾**エクスプロイトはx86_64カーネルヒープ配置を前提とします。**Apple Silicon**（およびWindows-on-ARM等のaarch64ホスト）ではリーク系プリミティブは着弾するものの、RCE着弾は再現しません。これはamd64エミュレーション下・arm64ネイティブ・アドバイザリ著者の参照構成（[calif.io/php2shell](https://calif.io/php2shell)、x86_64 Linux）のいずれでも検証済みです。ARMホストでは想定解は**開示チェーン**でありRCEチェーンではありません（開示チェーンはx86_64を含む全環境で動作）。詳細：[docs/PLATFORM-MATRIX.md](docs/PLATFORM-MATRIX.md)。
 
 ## リソース
 
@@ -46,7 +58,7 @@ PHP2Shellの公開済み**RCE着弾**エクスプロイトはx86_64カーネル�
 
 ## 解答
 
-解答は[wiki](https://github.com/taniungou/php2shell-lab/wiki)でスポイラー保護 — キルチェーン全体、オフセット、ラウンド別エージェント攻撃トランスクリプトを収録。本READMEにスポイラーなし、約束します。
+全キルチェーン・オフセット・ラウンド別攻撃トランスクリプト：[docs/SOLUTION.md](docs/SOLUTION.md)。追加トランスクリプトは[wiki](https://github.com/taniungou/php2shell-lab/wiki)に。
 
 ## ライセンス
 
