@@ -26,7 +26,7 @@ table{width:100%;border-collapse:collapse} td{padding:4px 8px;border-bottom:1px 
 </style></head>
 <body><div class="wrap">
 <h1>Dashboard</h1>
-<p>Signed in as <b><?= htmlspecialchars($user) ?></b> · <?= $user === 'backup' ? '<a href="/backup.php">backup audit</a> · ' ?><?= $user === 'backup' || $user === 'demo' ? '<a href="/about.php">runtime notes</a> · ' : '' ?><a href="/?logout=1">logout</a></p>
+<p>Signed in as <b><?= htmlspecialchars($user) ?></b> · <?= $user === 'backup' ? '<a href="/backup.php">backup audit</a> · ' : '' ?><?= $user === 'backup' || $user === 'demo' ? '<a href="/about.php">runtime notes</a> · ' : '' ?><a href="/?logout=1">logout</a></p>
 <?php if ($msg) echo '<p class="msg">'.htmlspecialchars($msg).'</p>'; ?>
 <form method="post" enctype="multipart/form-data">
 <input type="file" name="doc">
