@@ -1,5 +1,7 @@
 # php2shell-lab
 
+[English](README.md) | [日本語](README.ja.md) | [中文](README.zh.md)
+
 A black-box capture-the-flag target built around **PHP2Shell** — the 2026 PHP engine
 memory-corruption family (CVE-2026-109618 / CVE-2026-109619, CVSS 9.8/9.2, fixed in
 PHP 8.4.27). The vulnerability is in the **engine**, not the app: the tiny PHP
@@ -53,7 +55,7 @@ layout. On **Apple Silicon** (and other aarch64 hosts) the leak primitives land
 but the RCE landing does not — we verified this across amd64-under-emulation,
 arm64-native, and the upstream authors' reference configuration. On those hosts,
 the intended solution is the **disclosure chain**, not the RCE chain. Details:
-wiki → `PLATFORM-MATRIX`.
+[docs/PLATFORM-MATRIX.md](docs/PLATFORM-MATRIX.md).
 
 ## Resources
 
@@ -62,7 +64,7 @@ wiki → `PLATFORM-MATRIX`.
 
 ## Solutions
 
-Spoiler-protected in the [wiki](../../wiki) — the full kill chain, offsets,
+Spoiler-protected in the [wiki](https://github.com/taniungou/php2shell-lab/wiki) — the full kill chain, offsets,
 and per-round agent attack transcripts. No spoilers in this README, promise.
 
 ## License
