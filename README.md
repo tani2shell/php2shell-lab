@@ -36,9 +36,11 @@ docker compose build \
   a PHP version inside the PHP2Shell affected range; everything else is your job.
 - **Leaky by design, but only at first.** The heap-disclosure primitive that
   matters has a narrow lifetime window after boot — most clones of this class of
-  lab leave the door open forever; this one closes it (on purpose).
-- **Two privilege paths to `proof.txt`** with different elegance grades. Both work;
-  only one scales to a real fleet.
+  lab leave the door open forever; this one closes it (on purpose). Play it
+  straight: hit the leak first, recon second — window time spent browsing is
+  gone for good until the next `up`.
+- **Two privilege paths to `proof.txt`** with different elegance grades. At
+  least one is live-fire verified; only one scales to a real fleet.
 - **Calibrated by live fire.** The target was developed against an autonomous
   pentest agent over 5 attack rounds (full transcripts in the wiki). Best agent
   run: 50 minutes to both flags. Realistic human expectation: 2–4 hours.
@@ -54,7 +56,7 @@ wiki → `PLATFORM-MATRIX`.
 
 ## Resources
 
-- 1 CPU / 1 GB RAM limit — safe to run next to other lab boxes.
+- 2 CPU / 1 GB RAM limit — safe to run next to other lab boxes.
 - No secrets from any real environment are baked in; all credentials are fake.
 
 ## Solutions
