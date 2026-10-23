@@ -38,5 +38,5 @@ h1{font-size:22px} .foot{font-size:11px;color:#777;margin-top:18px}
 <label>Password</label><input name="password" type="password" autocomplete="off">
 <button>Sign in</button>
 </form>
-<p class="foot">demo / demo123 (demo account)</p>
+<p class="foot">demo access: user <b>demo</b> (password in the box, finder's reward)</p>
 </div></body></html>
