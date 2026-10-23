@@ -1,0 +1,10 @@
+services:
+  phpvault:
+    build: .
+    image: phpvault:latest
+    container_name: phpvault
+    ports:
+      - "0.0.0.0:18901:80"
+    mem_limit: 1g
+    cpus: 2
+    restart: unless-stopped

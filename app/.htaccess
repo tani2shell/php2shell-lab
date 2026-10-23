@@ -1,0 +1,3 @@
+RewriteEngine On
+RewriteRule ^meta\.json$ /meta.json.php [L]
+RewriteRule ^backup\.sql$ /backup.sql [L]
