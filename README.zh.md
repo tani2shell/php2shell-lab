@@ -10,7 +10,7 @@
 **前提：** 只需 Docker Engine（Windows/macOS 用 Docker Desktop）+ Compose v2——宿主机不需要 PHP 工具链。支持 Windows 10/11（WSL2）、Linux、macOS；你的 CPU 能打哪条利用链见下方平台说明。
 
 ```bash
-git clone https://github.com/taniungou/php2shell-lab.git
+git clone https://github.com/tani2shell/php2shell-lab.git
 cd php2shell-lab
 docker compose up -d --build          # 首次构建会拉取钉版的 base 镜像
 ```

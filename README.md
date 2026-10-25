@@ -17,7 +17,7 @@ Windows 10/11 (WSL2), Linux, and macOS; see the platform note below for
 which exploit chain your CPU supports.
 
 ```bash
-git clone https://github.com/taniungou/php2shell-lab.git
+git clone https://github.com/tani2shell/php2shell-lab.git
 cd php2shell-lab
 docker compose up -d --build          # first build pulls the pinned base image
 ```

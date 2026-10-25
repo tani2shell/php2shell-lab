@@ -10,7 +10,7 @@
 **前提条件：** Docker Engine（Windows/macOSではDocker Desktop）+ Compose v2 のみ。ホストにPHPツールチェーンは不要です。Windows 10/11（WSL2）、Linux、macOSで動作。CPUに対応可能な攻撃チェーンは下記のプラットフォーム注意を参照。
 
 ```bash
-git clone https://github.com/taniungou/php2shell-lab.git
+git clone https://github.com/tani2shell/php2shell-lab.git
 cd php2shell-lab
 docker compose up -d --build          # 初回ビルドでpin済みbase imageを取得
 ```
